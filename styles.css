@@ -27,12 +27,6 @@ body {
     border: 2px solid #ad0079;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: flex 0.3s ease;
-}
-
-.panel:hover {
-    flex: 2; /* Dynamically expand when hovered */
-    border-color: #007bff;
 }
 
 .panel h2 {
