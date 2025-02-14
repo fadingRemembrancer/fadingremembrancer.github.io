@@ -72,3 +72,21 @@ body {
     max-height: 100%;
   }
 
+.blinky-row {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f1cae1;
+    border: 5px double rgb(236, 94, 255);
+    border-radius: 8px;
+    text-align: center;
+    padding: 10px 0; /* Optional: Add some padding */
+    z-index: 1000; /* Ensure it stays on top of other content */
+}
+
+.blinky-row img {
+    margin: 0 5px; /* Add some space between blinkies */
+    height: 30px; /* Adjust the height of the blinkies */
+    width: auto; /* Maintain aspect ratio */
+}
