@@ -1,274 +1,127 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-  <script type="text/javascript">
-    /*tweaked by 1dcursors.tumblr.com*/
-    /*DO NOT STEAL OR REMOVE THIS TAGS*/
-    // <![CDATA[
-    var colour="random";
-    var sparkles=50;
-    var x=ox=400;
-    var y=oy=300;
-    var swide=800;
-    var shigh=600;
-    var sleft=sdown=0;
-    var tiny=new Array();
-    var star=new Array();
-    var starv=new Array();
-    var starx=new Array();
-    var stary=new Array();
-    var tinyx=new Array();
-    var tinyy=new Array();
-    var tinyv=new Array();
-     
-    window.onload=function() { if (document.getElementById) {
-      var i, rats, rlef, rdow;
-      for (var i=0; i<sparkles; i++) {
-        var rats=createDiv(3, 3);
-        rats.style.visibility="hidden";
-        rats.style.zIndex="999";
-        document.body.appendChild(tiny[i]=rats);
-        starv[i]=0;
-        tinyv[i]=0;
-        var rats=createDiv(5, 5);
-        rats.style.backgroundColor="transparent";
-        rats.style.visibility="hidden";
-        rats.style.zIndex="999";
-        var rlef=createDiv(1, 5);
-        var rdow=createDiv(5, 1);
-        rats.appendChild(rlef);
-        rats.appendChild(rdow);
-        rlef.style.top="2px";
-        rlef.style.left="0px";
-        rdow.style.top="0px";
-        rdow.style.left="2px";
-        document.body.appendChild(star[i]=rats);
-      }
-      set_width();
-      sparkle();
-    }}
-     
-    function sparkle() {
-      var c;
-      if (x!=ox || y!=oy) {
-        ox=x;
-        oy=y;
-        for (c=0; c<sparkles; c++) if (!starv[c]) {
-          star[c].style.left=(starx[c]=x)+"px";
-          star[c].style.top=(stary[c]=y)+"px";
-          star[c].style.clip="rect(0px, 5px, 5px, 0px)";
-          star[c].childNodes[0].style.backgroundColor=star[c].childNodes[1].style.backgroundColor=(colour=="random")?newColour():colour;
-          star[c].style.visibility="visible";
-          starv[c]=50;
-          break;
-        }
-      }
-      for (c=0; c<sparkles; c++) {
-        if (starv[c]) update_star(c);
-        if (tinyv[c]) update_tiny(c);
-      }
-      setTimeout("sparkle()", 40);
-    }
-    function playMusic(){
-      var music = new Audio ("https://file.garden/ZcUtOGUEiTIpAPak/rogaldornno");
-      music.play();
-      }
-    
-    
-    function update_star(i) {
-      if (--starv[i]==25) star[i].style.clip="rect(1px, 4px, 4px, 1px)";
-      if (starv[i]) {
-        stary[i]+=1+Math.random()*3;
-        starx[i]+=(i%5-2)/5;
-        if (stary[i]<shigh+sdown) {
-          star[i].style.top=stary[i]+"px";
-          star[i].style.left=starx[i]+"px";
-        }
-        else {
-          star[i].style.visibility="hidden";
-          starv[i]=0;
-          return;
-        }
-      }
-      else {
-        tinyv[i]=50;
-        tiny[i].style.top=(tinyy[i]=stary[i])+"px";
-        tiny[i].style.left=(tinyx[i]=starx[i])+"px";
-        tiny[i].style.width="2px";
-        tiny[i].style.height="2px";
-        tiny[i].style.backgroundColor=star[i].childNodes[0].style.backgroundColor;
-        star[i].style.visibility="hidden";
-        tiny[i].style.visibility="visible"
-      }
-    }
-     
-    function update_tiny(i) {
-      if (--tinyv[i]==25) {
-        tiny[i].style.width="1px";
-        tiny[i].style.height="1px";
-      }
-      if (tinyv[i]) {
-        tinyy[i]+=1+Math.random()*3;
-        tinyx[i]+=(i%5-2)/5;
-        if (tinyy[i]<shigh+sdown) {
-          tiny[i].style.top=tinyy[i]+"px";
-          tiny[i].style.left=tinyx[i]+"px";
-        }
-        else {
-          tiny[i].style.visibility="hidden";
-          tinyv[i]=0;
-          return;
-        }
-      }
-      else tiny[i].style.visibility="hidden";
-    }
-     
-    document.onmousemove=mouse;
-    function mouse(e) {
-      if (e) {
-        y=e.pageY;
-        x=e.pageX;
-      }
-      else {
-        set_scroll();
-        y=event.y+sdown;
-        x=event.x+sleft;
-      }
-    }
-     
-    window.onscroll=set_scroll;
-    function set_scroll() {
-      if (typeof(self.pageYOffset)=='number') {
-        sdown=self.pageYOffset;
-        sleft=self.pageXOffset;
-      }
-      else if (document.body && (document.body.scrollTop || document.body.scrollLeft)) {
-        sdown=document.body.scrollTop;
-        sleft=document.body.scrollLeft;
-      }
-      else if (document.documentElement && (document.documentElement.scrollTop || document.documentElement.scrollLeft)) {
-        sleft=document.documentElement.scrollLeft;
-        sdown=document.documentElement.scrollTop;
-      }
-      else {
-        sdown=0;
-        sleft=0;
-      }
-    }
-     
-    window.onresize=set_width;
-    function set_width() {
-      var sw_min=999999;
-      var sh_min=999999;
-      if (document.documentElement && document.documentElement.clientWidth) {
-        if (document.documentElement.clientWidth>0) sw_min=document.documentElement.clientWidth;
-        if (document.documentElement.clientHeight>0) sh_min=document.documentElement.clientHeight;
-      }
-      if (typeof(self.innerWidth)=='number' && self.innerWidth) {
-        if (self.innerWidth>0 && self.innerWidth<sw_min) sw_min=self.innerWidth;
-        if (self.innerHeight>0 && self.innerHeight<sh_min) sh_min=self.innerHeight;
-      }
-      if (document.body.clientWidth) {
-        if (document.body.clientWidth>0 && document.body.clientWidth<sw_min) sw_min=document.body.clientWidth;
-        if (document.body.clientHeight>0 && document.body.clientHeight<sh_min) sh_min=document.body.clientHeight;
-      }
-      if (sw_min==999999 || sh_min==999999) {
-        sw_min=800;
-        sh_min=600;
-      }
-      swide=sw_min;
-      shigh=sh_min;
-    }
-     
-    function createDiv(height, width) {
-      var div=document.createElement("div");
-      div.style.position="absolute";
-      div.style.height=height+"px";
-      div.style.width=width+"px";
-      div.style.overflow="hidden";
-      return (div);
-    }
-     
-    function newColour() {
-      var c=new Array();
-      c[0]=255;
-      c[1]=Math.floor(Math.random()*256);
-      c[2]=Math.floor(Math.random()*(256-c[1]/2));
-      c.sort(function(){return (0.5 - Math.random());});
-      return ("rgb("+c[0]+", "+c[1]+", "+c[2]+")");
-    }
-    // ]]>
-    </script>
-    <!-- Change your site title: (It is shown in the tab) -->
-    <title>Land of Obsidian Roses and Obscure Sorrows.</title>
+    <head>
+        <script src="sparkle.js"></script>
+        <script type="text/javascript">
+            function playAudio() {
+                var music = new Audio(
+                    "https://file.garden/ZcUtOGUEiTIpAPak/rogaldornno",
+                );
+                music.play();
+            }
+        </script>
+        <!-- Change your site title: (It is shown in the tab) -->
+        <title> Somber Gardens </title>
 
-    <!-- Change your site description: (It is shown in Google results) -->
-    <meta content="Personal site." name="Ayla 'Whitestrake'." />
+        <!-- Change your site description: (It is shown in Google results) -->
+        <meta content="Personal site." name="Ayla 'Whitestrake'." />
 
-    <!-- Setting character encoding and viewport size. Do not remove. -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- Setting character encoding and viewport size. Do not remove. -->
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- FavIcon (small image in tab), change to any image you want: -->
-    <link href="favicon.ico" rel="icon" type="image/x-icon" />
+        <!-- FavIcon (small image in tab), change to any image you want: -->
+        <link href="favicon.ico" rel="icon" type="image/x-icon" />
 
-    <!-- CSS: -->
-    <!-- You will have to change this to "../style.css" if this HTML file is in a subfolder, to "../../style.css" if this HTML file is in 2 subfolders, etc. -->
-    <link href="./style.css" rel="stylesheet" />
-    
+        <!-- CSS: -->
+        <!-- You will have to change this to "../style.css" if this HTML file is in a subfolder, to "../../style.css" if this HTML file is in 2 subfolders, etc. -->
+        <link href="./style.css" rel="stylesheet" />
 
-    <script>
-      // Template generated with petrapixel's layout generator.
-      // (Please do not remove this credit.)
-      // (I would never, this is awesome and you deserve credit!)
-      console.log("%c Template generated with petrapixel's layout generator.", "font-size: 14pt;");
-      console.log("%c https://petrapixel.neocities.org/coding/layout-generator", "font-size: 14pt;");
-    </script>
-  </head>
+        <script>
+            // Template generated with petrapixel's layout generator.
+            // (Please do not remove this credit.)
+            // (I would never, this is awesome and you deserve credit!)
+            console.log(
+                "%c Template generated with petrapixel's layout generator.",
+                "font-size: 14pt;",
+            );
+            console.log(
+                "%c https://petrapixel.neocities.org/coding/layout-generator",
+                "font-size: 14pt;",
+            );
+        </script>
+    </head>
 
-  <body>
-    <!-- The next line is a skip-to-content link for keyboard users. Do not remove it! -->
-    <a href="#content" id="skip-to-content-link">Skip to content</a>
+    <body>
+        <!-- The next line is a skip-to-content link for keyboard users. Do not remove it! -->
+        <a href="#content" id="skip-to-content-link">Skip to content</a>
 
-    <div class="layout">
-  
-      <!-- =============================================== -->
-      <!-- HEADER -->
-      <!-- =============================================== -->
+        <div class="layout">
+            <!-- =============================================== -->
+            <!-- HEADER -->
+            <!-- =============================================== -->
 
-      <header>
+            <header>
+                <div class="header-content">
+                    <div class="header-title" style="text-align: center">
+                        <img
+                            src="avatars/kin/aylaicon.jpg"
+                            style="height: 150px; width: auto"
+                        /><img
+                            src="avatars/kin/vena.png"
+                            style="height: 150px; width: auto"
+                        />
+                        <img
+                            src="avatars/kin/venti.png"
+                            style="height: 150px; width: auto"
+                        />
+                        Ayla's haven.
+                        <img
+                            src="avatars/kin/biker.png"
+                            style="height: 150px; width: auto"
+                        /><img
+                            src="avatars/kin/nimona.jpg"
+                            style="height: 150px; width: auto"
+                        />
+                        <img
+                            src="avatars/kin/nari.jpg"
+                            style="height: 150px; width: auto"
+                        />
+                    </div>
+                </div>
+            </header>
 
-        <div class="header-content">
-        <div class="header-title" style="text-align: center;"><img src="avatars/kin/aylaicon.jpg" style="height: 150px; width: auto;"><img src="avatars/kin/vena.png" style="height: 150px; width: auto;">
-          <img src="avatars/kin/venti.png" style="height: 150px; width: auto;">  Ayla's haven.  <img src="avatars/kin/biker.png" style="height: 150px; width: auto;"><img src="avatars/kin/nimona.jpg" style="height: 150px; width: auto;">
-          <img src="avatars/kin/nari.jpg" style="height: 150px; width: auto;"></div>
-        </div>
-      </header>
+            <!-- =============================================== -->
+            <!-- LEFT SIDEBAR -->
+            <!-- =============================================== -->
 
-	  
-        
-      <!-- =============================================== -->
-      <!-- LEFT SIDEBAR -->
-      <!-- =============================================== -->
+            <aside class="left-sidebar">
+                <div class="sidebar-section">
+                    <img
+                        src="icons/linkback.gif"
+                        style="width: 100%; height: auto"
+                        alt="crystalgutz"
+                    />
+                </div>
 
-      <aside class="left-sidebar">
-        
-        <div class ="sidebar-section"><img src="icons/linkback.gif" style="width: 100%; height: auto;" alt="crystalgutz"></div>
-        
-        <div class="sidebar-section">
-          <div class="sidebar-title">Things i do / Things about me.</div>
-          <p>While I am not particularly fond of sharing things on the web, I will share my projects and poems, and also disclose a bit about who I am, and my experiences so far.</p>
-        </div>
-        
-        <div class="sidebar-section">
-          <div class="sidebar-title">Links</div>
-          <blockquote>
-            <p>Soon enough a few new pages will be made, some for my music projects, some for my poems. It will be below this block of text.</p>
-            <p>Stick around if you'd like! The realm of Obsidian Roses will always be open to you.</p>
-          </blockquote>
-        </div>
-        
-        <!-- ++++ Commenting out for now, no use for it. ++++
+                <div class="sidebar-section">
+                    <div class="sidebar-title">
+                        Things i do / Things about me.
+                    </div>
+                    <p>
+                        While I am not particularly fond of sharing things on
+                        the web, I will share my projects and poems, and also
+                        disclose a bit about who I am, and my experiences so
+                        far.
+                    </p>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-title">Links</div>
+                    <blockquote>
+                        <p>
+                            Soon enough a few new pages will be made, some for
+                            my music projects, some for my poems. It will be
+                            below this block of text.
+                        </p>
+                        <p>
+                            Stick around if you'd like! The realm of Obsidian
+                            Roses will always be open to you.
+                        </p>
+                    </blockquote>
+                </div>
+
+                <!-- ++++ Commenting out for now, no use for it. ++++
         <div class="sidebar-section">
           <div class="sidebar-title">Section Title</div>
           <ul>
@@ -278,95 +131,174 @@
             <li>List</li>
           </ul>
         </div> -->
-        
-        <div class="sidebar-section">
-          <marquee>
-          	<a href="https://crystalgutz.neocities.org/" class="blinkie-link" target="_blank"><img src="icons/linkback.gif" style="width: 100%; height: auto;" alt="crystalgutz"></a>
-          	<a href="https://crystalgutz.neocities.org/projects"  class="blinkie-link" target="_blank"><img src="icons/projects.gif" style="width: 100%; height: auto;"  alt="crystalgutz"></a>
-          	<a href="https://crystalgutz.neocities.org/bio" class="blinkie-link" target="_blank"><img src="icons/bio.gif" style="width: 100%; height: auto;" alt="crystalgutz"></a>
-          	<a href="https://crystalgutz.neocities.org/poems" class="blinkie-link" target="_blank"><img src="icons/poems.gif" style="width: 100%; height: auto;" alt="crystalgutz"></a>
-          </marquee>
+
+                <div class="sidebar-section">
+                    <div class="marquee">
+                        <div class="marquee-inner">
+                        <a
+                            href="https://fadingremembrancer.github.io/"
+                            target="_blank"
+                            ><img
+                                src="icons/linkback.gif"
+                                alt="Main page"
+                        /></a>
+                        <a
+                            href="https://fadingremembrancer.github.io/projects"
+                            target="_blank"
+                            ><img
+                                src="icons/projects.gif"
+                                alt="Projects"
+                        /></a>
+                        <a
+                            href="https://fadingremembrancer.github.io/bio"
+                            target="_blank"
+                            ><img
+                                src="icons/bio.gif"
+                                alt="Bio"
+                        /></a>
+                            <a
+                                href="https://fadingremembrancer.github.io/gallery"
+                                target="_blank"
+                                ><img
+                                    src="icons/gallery.gif"
+                                    alt="Gallery"
+                                /></a>
+                        <a
+                            href="https://fadingremembrancer.github.io/poems"
+                            target="_blank"
+                            ><img
+                                src="icons/poems.gif"
+                                alt="Poems"
+                        /></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="flexboxOnParentDiv">
+                        <a
+                            style="width: 100%; text-align: center"
+                            ><img onclick="playAudio()"
+                                src="https://file.garden/ZcUtOGUEiTIpAPak/dorncube.gif"
+                        /></a>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="site-button">
+                        <a
+                            href="https://fadingremembrancer.github.io/"
+                            target="_blank"
+                            ><img
+                                src="icons/linkback.gif"
+                                style="width: 100%; height: auto"
+                                alt="crystalgutz"
+                        /></a>
+                        <textarea>
+<a href="https://fadingremembrancer.github.io//" target="_blank"><img src="icons/linkback.gif" style="width: 100%; height: auto;" alt="crystalgutz"></a></textarea
+                        >
+                    </div>
+                </div>
+            </aside>
+
+            <!-- =============================================== -->
+            <!-- RIGHT SIDEBAR -->
+            <!-- =============================================== -->
+
+            <aside class="right-sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-title"></div>
+                    <p>I dont really know what to place here...</p>
+                    <p>Have you drank water today?</p>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-title"></div>
+                    <p>
+                        Have these doomcubes! (I don't remember how to make
+                        these and I lost the files to do so in an OS
+                        switchover... Always back-up your files. Always.)
+                    </p>
+                    <div class="flexboxOnParentDiv">
+                        <img
+                            src="avatars/doomskulls/tran 2.gif"
+                            alt="spinning doomcube with trans flag colors"
+                        /><img
+                            src="avatars/doomskulls/pan.gif"
+                            alt="spinning doomcube with pan flag colors"
+                        />
+                        <img
+                            src="avatars/doomskulls/ace.gif"
+                            alt="spinning doomcube with ace flag colors"
+                        />
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-title"></div>
+                    <div class="sidebar-section">
+                        <div class="site-button">
+                            <a
+                                href="https://crystalgutz.neocities.org/"
+                                target="_blank"
+                                ><img
+                                    src="icons/linkback.gif"
+                                    alt="crystalgutz"
+                            /></a>
+                            <textarea>
+<a href="https://crystalgutz.neocities.org/" target="_blank"><img src="icons/linkback.gif" alt="crystalgutz"></a></textarea
+                            >
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main id="content">
+                <!-- Do NOT remove the ID here -->
+
+                <!-- =============================================== -->
+                <!-- MAIN CONTENT -->
+                <!-- =============================================== -->
+
+                <section>
+                    <h1>This website, what is it about?</h1>
+                    <p style="font-size: 130%">
+                        It's mostly just a website for me to document my own
+                        things, such as poems and art. I might leave a few of my
+                        thinkings at some point, but there's nothing that good
+                        right now. That being said, it also will serve as a bio
+                        for other places, such as discord and github! Because I
+                        think using neocities like this is neat. Adds a bit more
+                        to the personal vibe. Obviously more things will be
+                        added in the future. I really just want to remove the
+                        ugly makeover i made last year or so, haha!
+                    </p>
+                    <p>Revamped 4/26/2025.</p>
+                </section>
+            </main>
+
+            <!-- =============================================== -->
+            <!-- FOOTER -->
+            <!-- =============================================== -->
+
+            <footer>
+                <div>
+                    Thank you for checking out my site! Template generated with
+                    <a
+                        href="https://petrapixel.neocities.org/coding/layout-generator.html"
+                        >petrapixel's layout generator</a
+                    >. Blinkies made using
+                    <a href="https://blinkies.cafe" target="_blank"
+                        ><img
+                            src="https://blinkies.cafe/b/display/blinkiesCafe-badge.gif"
+                            alt="blinkies.cafe | make your own blinkies!" /></a
+                    />
+               !</div>
+            </footer>
+
+            <!-- Closing .layout: -->
         </div>
-        
-        <div class="sidebar-section">
-          <div class="flexboxOnParentDiv">
-            <a href="https://www.youtube.com/watch?v=iGiVRd8ndZ8" style="width: 100%; text-align: center"><img src="https://file.garden/ZcUtOGUEiTIpAPak/dorncube.gif"></a>
-            </div>
-        </div>
-        
-        <div class="sidebar-section">
-          <div class="site-button">
-          	<a href="https://crystalgutz.neocities.org/" target="_blank"><img src="icons/linkback.gif" style="width: 100%; height: auto;" alt="crystalgutz"></a>
-        	<textarea><a href="https://crystalgutz.neocities.org/" target="_blank"><img src="icons/linkback.gif" style="width: 100%; height: auto;" alt="crystalgutz"></a></textarea>
-          </div>
-        </div>
-      </aside>
-	
-	  
-      <!-- =============================================== -->
-      <!-- RIGHT SIDEBAR -->
-      <!-- =============================================== -->
 
-      <aside class="right-sidebar">       
-        <div class="sidebar-section">
-          <div class="sidebar-title"></div>
-          <p>I dont really know what to place here...</p>
-          <p>Have you drank water today?</p>
-        </div>
-        
-        <div class="sidebar-section">
-          <div class="sidebar-title"></div>
-            <p>Have these doomcubes! (I don't remember how to make these and I lost the files to do so in an OS switchover... Always back-up your files. Always.)</p>
-            <div class="flexboxOnParentDiv">
-              <img src="avatars/doomskulls/tran 2.gif" alt="spinning doomcube with trans flag colors"><img src="avatars/doomskulls/pan.gif" alt="spinning doomcube with pan flag colors">
-              <img src="avatars/doomskulls/ace.gif" alt="spinning doomcube with ace flag colors">
-            </div>
-        </div>
-        
-        <div class="sidebar-section">
-          <div class="sidebar-title"></div>
-          <div class="sidebar-section">
-            <div class="site-button">
-              <a href="https://crystalgutz.neocities.org/" target="_blank"><img src="icons/linkback.gif" alt="crystalgutz"></a>
-            <textarea><a href="https://crystalgutz.neocities.org/" target="_blank"><img src="icons/linkback.gif" alt="crystalgutz"></a></textarea>
-            </div>
-        </div>
-        </div>
-      </aside>
-      
-  
-      <main id="content"> <!-- Do NOT remove the ID here -->
-
-        
-
-        <!-- =============================================== -->
-        <!-- MAIN CONTENT -->
-        <!-- =============================================== -->
-
-
-        <section>
-
-          <h1>This website, what is it about?</h1>
-          <p style="font-size: 130%;"> It's mostly just a website for me to document my own things, such as poems and art. I might leave a few of my thinkings at some point, but there's nothing that good right now. That being said, it also will serve as a bio for other places, such as discord and github! 
-            Because I think using neocities like this is neat. Adds a bit more to the personal vibe.
-            Obviously more things will be added in the future. I really just want to remove the ugly makeover i made last year or so, haha!</p>
-          <p>Revamped 4/26/2025.</p>
-        </section>
-      </main>
-
-
-      <!-- =============================================== -->
-      <!-- FOOTER -->
-      <!-- =============================================== -->
-
-      <footer>
-            <div>Thank you for checking out my site! Template generated with <a href="https://petrapixel.neocities.org/coding/layout-generator.html">petrapixel's layout generator</a>.</div>
-      </footer>
-  
-    <!-- Closing .layout: -->
-    </div>
-
-
-    <!-- Add any additional Javascript code (<script></script>) here. -->
-  </body>
+        <!-- Add any additional Javascript code (<script></script>) here. -->
+    </body>
 </html>
